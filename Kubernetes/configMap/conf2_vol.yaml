@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+    name: conf
+    namespace: prac
+data: 
+  sample: sample conf data
+  sample1: |
+    data1: sample conf data1
+    data2: sample conf data2
+
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: cnf
+  namespace: prac
+spec: 
+  containers: 
+    - name: cm-conf
+      image: alpine
+      command: ["sleep", "3600"]
+      volumeMounts:
+        - name: cnf-vol 
+          mountPath: /etc/conf
+  volumes:
+    - name: cnf-vol
+      configMap:
+        name: conf

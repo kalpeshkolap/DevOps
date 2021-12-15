@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+    name: conf-demo
+    namespace: prac
+spec: 
+    containers: 
+        - name: demo
+          image: alpine
+          command: ["sleep" , "3600"]
+          env:
+            - name: cof-user
+              valueFrom:
+                configMapKeyRef:
+                  name: simple-conf
+                  key: us_name
+            - name: multiprop-conf
+              valueFrom:
+                configMapKeyRef: 
+                  name: simple-conf
+                  key: multiprop
+
+# use below cmd to enter into pod
+# kubectl exec -it conf-demo  -n prac --container demo  sh 
+# use printenv to get environment variables

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: conf-vol
+  namespace: prac
+data:  
+    sample: conf
+    sample1: |
+      name: kalpesh
+      skill: devops
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: confvol
+  namespace: prac
+spec: 
+  containers: 
+    - name: demo
+      image: alpine
+      command: ["sleep" ,"3600"]
+      volumeMounts:
+        - name: demo-vol
+          mountPath: /etc/conf
+  volumes:
+    - name: demo-vol
+      configMap:
+        name: conf-vol
