@@ -1,0 +1,108 @@
+1 installing prometheus
+
+sudo useradd --no-create-home prometheus
+sudo mkdir /etc/prometheus
+sudo mkdir /var/lib/prometheus
+ 
+wget  https://github.com/prometheus/prometheus/releases/download/v2.23.0/prometheus-2.23.0.linux-amd64.tar.gz
+ tar -xvzf prometheus-2.23.0.linux-amd64.tar.gz
+cd prometheus-2.23.0.linux-amd64
+sudo cp prometheus-2.23.0.linux-amd64/prometheus /usr/local/bin
+sudo cp prometheus-2.23.0.linux-amd64/promtool /usr/local/bin
+sudo cp -r prometheus-2.23.0.linux-amd64/consoles /etc/prometheus/
+sudo cp -r prometheus-2.23.0.linux-amd64/console_libraries /etc/prometheus
+sudo cp prometheus-2.23.0.linux-amd64/promtool /usr/local/bin/
+
+rm -rf prometheus-2.23.0.linux-amd64.tar.gz prometheus-2.19.0.linux-amd64
+sudo cp prometheus.yml /etc/prometheus/
+vim  prometheus.service
+cat [Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/usr/local/bin/prometheus \
+    --config.file /etc/prometheus/prometheus.yml \
+    --storage.tsdb.path /var/lib/prometheus/ \
+    --web.console.templates=/etc/prometheus/consoles \
+    --web.console.libraries=/etc/prometheus/console_libraries
+
+[Install]
+WantedBy=multi-user.target  >>  prometheus.service
+sudo cp prometheus.service /etc/systemd/system/
+
+sudo chown prometheus:prometheus /etc/prometheus
+sudo chown prometheus:prometheus /usr/local/bin/prometheus
+sudo chown prometheus:prometheus /usr/local/bin/promtool
+sudo chown -R prometheus:prometheus /etc/prometheus/consoles
+sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
+sudo chown -R prometheus:prometheus /var/lib/prometheus
+
+sudo systemctl daemon-reload
+sudo systemctl enable prometheus
+sudo systemctl start prometheus
+sudo systemctl status prometheus
+
+2 node_exporter
+
+sudo useradd --no-create-home node_exporter
+wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz
+tar -xvzf node_exporter-1.0.1.linux-amd64.tar.gz
+sudo cp node_exporter-1.0.1.linux-amd64/node_exporter /usr/local/bin/
+vim  node-exporter.service
+[Unit]
+Description=Prometheus Node Exporter Service
+After=network.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+sudo cp node-exporter.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable node-exporter
+sudo systemctl start node-exporter
+sudo systemctl status node-exporter
+
+3 configuring alertmanager
+wget https://github.com/prometheus/alertmanager/releases/download/v0.16.2/alertmanager-0.16.2.linux-amd64.tar.gz
+tar -xvzf alertmanager-0.16.2.linux-amd64.tar.gz
+cp alertmanager-0.16.2.linux-amd64/alertmanager /usr/local/bin/
+mkdir /etc/alertmanager/
+cp alertmanager-0.16.2.linux-amd64/alertmanager.yml /etc/alertmanager/
+vim /etc/alertmanager/alertmanager.yml
+vim /etc/systemd/system/alertmanager.service
+[Unit]
+Description=AlertManager Server Service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=root
+Group=root
+Type=Simple
+ExecStart=/usr/local/bin/alertmanager \
+    --config.file /etc/alertmanager/alertmanager.yml
+
+[Install]
+WantedBy=multi-user.target
+
+systemctl daemon-reload
+systemctl start alertmanager
+systemctl status alertmanager
+
+4 installing grafana
+wget https://dl.grafana.com/enterprise/release/grafana-enterprise-8.3.3-1.x86_64.rpm
+sudo yum install grafana-enterprise-8.3.3-1.x86_64.rpm
+sudo systemctl daemon-reload
+sudo systemctl start grafana-server
+sudo systemctl status grafana-server
+sudo systemctl enable grafana-server.service
