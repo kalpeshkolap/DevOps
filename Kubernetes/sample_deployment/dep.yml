@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: take
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: takme
+  template:
+    metadata:
+      labels:
+        app: takme
+    spec:
+      containers:
+        - name: takeme
+          image: kk2104/tomcat:v1
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 200m
+              memory: 500Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi

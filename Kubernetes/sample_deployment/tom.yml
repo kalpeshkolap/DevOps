@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata: 
+        name: takeme
+spec:
+        selector:
+                app: takme
+        ports:
+                - protocol: TCP
+                  port: 80
+                  targetPort: 8080
+

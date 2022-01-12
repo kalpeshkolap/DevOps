@@ -1,0 +1,55 @@
+hostnamectl set-hostname www.your hostname.com
+hostnamectl
+clear
+dnf repolist
+clear
+yum install -y httpd openssl mod_ssl
+clear
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt
+clear
+ls -l
+cp -r server.crt /etc/pki/tls/certs/
+cp -r server.key /etc/pki/tls/private/
+clear
+vim /etc/httpd/conf.d/ssl.conf
+clear
+httpd -t
+apachectl configtest
+vim /etc/httpd/conf.d/httpd.conf
+cd /var/www/html/
+ll
+mkdir -p /var/www/html/website1
+mkdir -p /var/www/html/website2
+ll
+ls -lZd /var/www/html/
+ls -lZd website1
+ls -lZd website2
+clear
+httpd -t
+clear
+cd website
+cd website2
+pwd
+clear
+vim index.html
+cd ..
+cd website1
+clear
+ll
+cp -r /root/Desktop/perfect-learn/* .
+ll
+clear
+httpd -t
+clear
+firewall-cmd --permanent --add-service=https
+firewall-cmd --permanent --add-port=443/tcp
+firewall-cmd --reload
+clear
+systemctl start httpd
+systemctl enable httpd
+systemctl status httpd
+clear
+cd
+vim /etc/hosts
+clear
+systemctl restart httpd
