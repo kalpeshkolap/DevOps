@@ -1,5 +1,5 @@
 ---
-- name: configuring tomcat server
+- name: installing multiple packages using Loop
   hosts: test
   become: true
   gather_facts: false
