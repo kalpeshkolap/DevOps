@@ -1,4 +1,4 @@
-hostnamectl set-hostname www.nehraclasses.com
+hostnamectl set-hostname www.your hostname.com
 hostnamectl
 clear
 dnf repolist
