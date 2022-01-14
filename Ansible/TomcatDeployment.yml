@@ -57,3 +57,4 @@
            shell: nohup /home/{{ansible_ssh_user}}/tomcat/apache-tomcat/bin/startup.sh &
 
 ...
+
