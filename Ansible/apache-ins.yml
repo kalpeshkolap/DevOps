@@ -1,0 +1,41 @@
+
+    - name: enable firewalld service
+      service:
+        name: "{{item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - firewalld
+        - httpd
+
+    - name:
+      copy:
+          src: /home/ansibm/index.html
+          dest: /var/www/html/
+      notify:
+        - restart httpd
+
+
+    - name: FirewallD rules
+      firewalld:
+        permanent: yes
+        immediate: yes
+        port: "{{ item.port  }}/{{ item.proto  }}"
+        state: "{{ item.state  }}"
+      with_items:
+        - { port: "80", proto: "tcp", state: enabled  }
+        - { port: "443", proto: "tcp", state: enabled  }
+      notify:
+          - restart firewall
+
+  handlers:
+    - name: restart firewall
+      service:
+        name: firewalld
+        state: reloaded
+
+    - name: restart httpd
+      service:
+        name: httpd
+        state: reloaded
+
