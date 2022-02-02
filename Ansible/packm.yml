@@ -7,7 +7,7 @@
     - name: installing packages
       yum:
         name: '{{ item }}'
-        state: absent
+        state: latest
       loop:
         - git
         - curl
