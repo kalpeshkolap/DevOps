@@ -32,7 +32,6 @@
 
          - name: decompressing tomcat file
            unarchive:  
-
                    src: /home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}.tar.gz 
                    dest: /home/{{ansible_ssh_user}}/tomcat/
                    remote_src: yes
@@ -55,6 +54,4 @@
 
          - name: Starting tomcat
            shell: nohup /home/{{ansible_ssh_user}}/tomcat/apache-tomcat/bin/startup.sh &
-
-...
 

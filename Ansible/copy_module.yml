@@ -1,0 +1,28 @@
+---
+- hosts: test
+  gather_facts: false
+  become: true
+  vars:
+    path: '/home/ansibm/playbooks'
+    remote_path: '/home/{{ansible_ssh_user}}'
+    dir: 'yml_files'
+  tasks:
+    - name: "creating directory for backup file"
+      file:
+        path: '{{ remote_path }}/{{ dir }}'
+        state: directory
+        owner: '{{ansible_ssh_user}}'
+        group: '{{ansible_ssh_user}}'
+        mode: 0700
+    - name: "copying yml files"
+      copy:
+        src: '{{item}}'
+        dest: '{{ remote_path }}/{{ dir }}'
+        owner: '{{ansible_ssh_user}}'
+        group: '{{ansible_ssh_user}}'
+        mode: 0644
+      loop:
+          - '{{ path }}/ab.html'
+          - '{{ path }}/cp.yml'
+...
+
