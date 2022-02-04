@@ -1,0 +1,48 @@
+---
+- name: 'backup files'
+  hosts: master
+  become: true
+  vars:
+    path: '/home/{{ansible_ssh_user}}/playbooks'
+  gather_facts: false
+  tasks:
+    - name: 'compressing files'
+      archive:
+        path:
+           - /home/{{ansible_ssh_user}}/playbooks/*
+        dest: '/home/{{ansible_ssh_user }}/playbooks/backup.tar.gz'
+        format: gz
+        owner: '{{ansible_ssh_user}}'
+        group: '{{ansible_ssh_user}}'
+        mode: 0644
+- name: "copy module"
+  hosts: test
+  become: true
+  gather_facts: false
+  tasks:
+      - name: "Create a directory"
+        file:
+          path: '/home/{{ansible_ssh_user}}/backup'
+          state: directory
+          mode: '0755'
+          owner: '{{ansible_ssh_user}}'
+          group: '{{ansible_ssh_user}}'
+      - name: "copying files"
+        copy:
+          src: '/home/ansibm/playbooks/{{ item }}'
+          dest: '/home/{{ ansible_ssh_user }}/backup'
+          owner: '{{ansible_ssh_user}}'
+          group: '{{ansible_ssh_user}}'
+          mode: 0644
+        loop:
+          - backup.tar.gz
+      - name: "decompressing files"
+        unarchive:
+          src: '/home/{{ansible_ssh_user}}/backup/backup.tar.gz'
+          dest: '/home/{{ ansible_ssh_user }}/backup'
+          owner: '{{ansible_ssh_user}}'
+          group: '{{ansible_ssh_user}}'
+          mode: 0644
+          remote_src: True
+...
+
