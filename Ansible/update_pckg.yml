@@ -1,0 +1,10 @@
+---
+- name: "updating packages"
+  hosts: test
+  become: yes
+  tasks:
+      - name: "updating"
+        yum: 
+          name: "*"
+          state: latest
+...
