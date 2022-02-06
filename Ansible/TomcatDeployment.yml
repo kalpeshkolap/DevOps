@@ -32,13 +32,17 @@
 
          - name: decompressing tomcat file
            unarchive:  
-                   src: /home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}.tar.gz 
-                   dest: /home/{{ansible_ssh_user}}/tomcat/
-                   remote_src: yes
+                   src: '/home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}.tar.gz' 
+                   dest: '/home/{{ansible_ssh_user}}/tomcat/'
+                   owner: '{{ansible_ssh_user}}'
+                   group: '{{ansible_ssh_user}}'
+                   mode: 0644
+                   remote_src: True
+                   
 
          - name: Change file ownership, group and permissions
            file:
-                  path: /home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}
+                  path: '/home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}'
                   owner: "{{ansible_ssh_user}}"
                   group: "{{ansible_ssh_user}}"
                   mode: '0770' 
