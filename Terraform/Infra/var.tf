@@ -67,7 +67,7 @@ data "aws_ami" "image" {
     values = ["webserver"]
   }
 
-  owners = ["246655928156"] # Canonical
+  owners = ["2xxxxxxxxxxx"] # Canonical
 }
 
 # data "aws_instances" "instance_id" {
