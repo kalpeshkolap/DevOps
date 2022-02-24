@@ -20,6 +20,7 @@
                    state: directory
                    owner: "{{ansible_ssh_user}}"
                    group: "{{ansible_ssh_user}}"
+                   mode: 0755
 
          - name: downloading tomcat
            get_url:
@@ -36,7 +37,7 @@
                    dest: '/home/{{ansible_ssh_user}}/tomcat/'
                    owner: '{{ansible_ssh_user}}'
                    group: '{{ansible_ssh_user}}'
-                   mode: 0644
+                   mode: 0755
                    remote_src: True
                    
 
