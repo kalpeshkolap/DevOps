@@ -1,6 +1,6 @@
 ---
 - name: configuring tomcat server
-  hosts: test
+  hosts: webserver
   become: true
   gather_facts: false
   vars:
