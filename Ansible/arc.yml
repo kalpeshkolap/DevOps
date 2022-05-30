@@ -1,0 +1,28 @@
+---
+- name: comm
+  hosts: test
+  become: true
+  gather_facts: false
+  tasks:
+      - name: "creating new directory for backup"
+        file:
+          path: '/home/{{ansible_ssh_user}}/backup'
+          state: directory
+          owner: '{{ansible_ssh_user}}' 
+          group: '{{ansible_ssh_user}}'
+          mode: '0755'
+      - name: "copying compressed files"
+        copy:
+          src: play.tar.gz
+          dest: '/home/{{ansible_ssh_user}}/backup'
+          owner: '{{ansible_ssh_user}}'
+          group: '{{ansible_ssh_user}}'
+          mode: 0755
+      - name: "decompressing compressed files"
+        unarchive:
+          src: '/home/{{ansible_ssh_user}}/backup/play.tar.gz'
+          dest: '/home/{{ansible_ssh_user}}/backup'
+          remote_src: True 
+          owner: "{{ansible_ssh_user}}"
+          group: "{{ansible_ssh_user}}"
+          mode: 0755

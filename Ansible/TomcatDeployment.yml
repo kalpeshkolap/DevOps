@@ -4,60 +4,53 @@
   become: true
   gather_facts: false
   vars:
-          req_java: java-11
-          tomcat_version: 9.0.58
-          tomcat_url: https://dlcdn.apache.org/tomcat/tomcat-{{tomcat_version.split('.')[0]}}/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz
+    req_java: java-11
+    tomcat_version: 9.0.58
+    tomcat_url: https://dlcdn.apache.org/tomcat/tomcat-{{tomcat_version.split('.')[0]}}/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz
   tasks:
-         
-         - name: installing java
-           yum:
-                name: "{{req_java}}" 
-                state: latest
-         
-         - name: dirtectory for tomcat
-           file:
-                   path: /home/{{ansible_ssh_user}}/tomcat
-                   state: directory
-                   owner: "{{ansible_ssh_user}}"
-                   group: "{{ansible_ssh_user}}"
+    - name: installing java
+      yum:
+        name: "{{req_java}}"
+        state: latest
 
-         - name: downloading tomcat
-           get_url:
-                   url: "{{tomcat_url}}"
-                   dest: /home/{{ansible_ssh_user}}/tomcat
-                   owner: "{{ansible_ssh_user}}"
-                   group: "{{ansible_ssh_user}}"
+    - name: dirtectory for tomcat
+      file:
+        path: /home/{{ansible_ssh_user}}/tomcat
+        state: directory
+        owner: "{{ansible_ssh_user}}"
+        group: "{{ansible_ssh_user}}"
 
+    - name: downloading tomcat
+      get_url:
+        url: "{{tomcat_url}}"
+        dest: /home/{{ansible_ssh_user}}/tomcat
+        owner: "{{ansible_ssh_user}}"
+        group: "{{ansible_ssh_user}}"
 
+    - name: decompressing tomcat file
+      unarchive:
+        src: "/home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}.tar.gz"
+        dest: "/home/{{ansible_ssh_user}}/tomcat/"
+        owner: "{{ansible_ssh_user}}"
+        group: "{{ansible_ssh_user}}"
+        mode: 0644
+        remote_src: True
 
-         - name: decompressing tomcat file
-           unarchive:  
-                   src: '/home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}.tar.gz' 
-                   dest: '/home/{{ansible_ssh_user}}/tomcat/'
-                   owner: '{{ansible_ssh_user}}'
-                   group: '{{ansible_ssh_user}}'
-                   mode: 0644
-                   remote_src: True
-                   
+    - name: Change file ownership, group and permissions
+      file:
+        path: "/home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}"
+        owner: "{{ansible_ssh_user}}"
+        group: "{{ansible_ssh_user}}"
+        mode: "0770"
 
-         - name: Change file ownership, group and permissions
-           file:
-                  path: '/home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}'
-                  owner: "{{ansible_ssh_user}}"
-                  group: "{{ansible_ssh_user}}"
-                  mode: '0770' 
+    - name: removing compressed file
+      shell: rm -rf /home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}.tar.gz
 
+    - name: Renaming tomcat home
+      shell: mv /home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}   /home/{{ansible_ssh_user}}/tomcat/apache-tomcat
 
-         - name: removing compressed file
-           shell: rm -rf /home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}.tar.gz
+    - name: Starting tomcat
+      shell: nohup /home/{{ansible_ssh_user}}/tomcat/apache-tomcat/bin/startup.sh &
 
-
-         - name: Renaming tomcat home
-           shell: mv /home/{{ansible_ssh_user}}/tomcat/apache-tomcat-{{tomcat_version}}   /home/{{ansible_ssh_user}}/tomcat/apache-tomcat
-
-
-         - name: Starting tomcat
-           shell: nohup /home/{{ansible_ssh_user}}/tomcat/apache-tomcat/bin/startup.sh &
-           
-           # https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.58/bin/apache-tomcat-9.0.58.tar.gz
-           # https://dlcdn.apache.org/tomcat/tomcat-{{tomcat_version.split('.')[0]}}/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz
+      # https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.58/bin/apache-tomcat-9.0.58.tar.gz
+      # https://dlcdn.apache.org/tomcat/tomcat-{{tomcat_version.split('.')[0]}}/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz

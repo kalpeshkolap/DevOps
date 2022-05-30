@@ -1,0 +1,30 @@
+---
+
+- hosts: all
+
+  tasks:
+          - name: Adding firewall Services
+            firewalld:
+                    service: nfs
+                    permanent: yes
+                    state: enabled
+            notify: reload_firewall
+
+          - name: Adding firewall ports
+            firewalld:
+                    port: 9081/tcp
+                    permanent: yes
+                    state: enabled
+            notify: reload_firewall
+
+          - name: Adding multiple firewall ports
+            firewalld:
+                    port: 441-449/tcp
+                    source: 172.31.28.58/32
+                    permanent: yes
+                    state: enabled
+            notify: reload_firewall
+
+  handlers:
+          - name: reload_firewall
+            service: name=firewalld state=restarted
