@@ -1,0 +1,23 @@
+---
+- name: "adding tomcat user"
+  user:
+    name: tomcat
+    comment: "tomcat user"
+    shell: /bin/false
+    generate_ssh_key: yes
+    state: present
+
+- name: "decompressing tomcat"
+  unarchive:
+    src: '/home/{{ansible_ssh_user}}/apache-tomcat-{{tomcat_version}}.tar.gz'
+    dest: '/usr/share/'
+    mode: 0644
+    owner: '{{ansible_ssh_user}}'
+    group: '{{ansible_ssh_user}}'
+    remote_src: True
+
+- name: "creating service file"
+  copy:
+    src: '/home/ansibm/tomcat.service'
+    dest: '/etc/systemd/system/tomcat.service'
+    

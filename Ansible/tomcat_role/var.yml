@@ -1,0 +1,5 @@
+---
+vars:
+          req_java: java-11
+          tomcat_version: 9.0.58
+          tomcat_url: https://dlcdn.apache.org/tomcat/tomcat-{{tomcat_version.split('.')[0]}}/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz

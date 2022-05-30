@@ -1,0 +1,13 @@
+---
+- name: "downloading required packages"
+  yum:
+    name: "{{req_java}}"
+    state: installed
+
+- name: "downloading required tomcat"
+  get_url:
+    url: "{{tomcat_url}}"
+    dest: '/home/{{ansible_ssh_user }}/'
+    owner: '{{ansible_ssh_user}}'
+    group: '{{ansible_ssh_user}}'
+    mode: 0644
