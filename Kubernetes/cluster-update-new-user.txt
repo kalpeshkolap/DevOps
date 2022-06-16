@@ -1,3 +1,4 @@
+before setup check rbac in k8s in ../
 1 renaming cluster
 
 kubectl edit cm -n kube-system kubeadm-config
