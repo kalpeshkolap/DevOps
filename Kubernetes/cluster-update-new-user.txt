@@ -1,0 +1,55 @@
+1 renaming cluster
+
+kubectl edit cm -n kube-system kubeadm-config
+ edit only
+ clusterName: dev
+2 creating users with rbac
+
+2.1 openssl genrsa -out de.key 2048
+2.2 openssl req -new -key dev.key -out dev.csr -subj "/CN=dev/O=development"
+2.3 openssl x509 -req -in dev.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out dev.crt -days 3000
+2.4 kubectl config set-credentials dev --client-certificate=/root/dev/dev.crt --client-key=/root/dev/dev.key
+2.5 kubectl config set-context dev --cluster=dev --user=dev
+
+3 create rbac policies
+3.1 create service account
+
+vim svc.yaml
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+ name: dev
+automountServiceAccountToken: false
+
+3.2 create clusterRole
+
+vim clusterRole.yaml    # with sudo access
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: devuser
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+  
+ 
+ 3.3 create clusterRolebinding
+ 
+ vim clusterRolebinding.yaml
+ apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: read-secrets-global
+subjects:
+- kind: User
+  name: dev
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: devuser
+  apiGroup: rbac.authorization.k8s.io
+
+ 
