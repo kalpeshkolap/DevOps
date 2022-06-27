@@ -1,3 +1,4 @@
+metrics server link kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -55,4 +56,4 @@ spec:
     name: nginx
   minReplicas: 1
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 5
+  targetCPUUtilizationPercentage: 50
