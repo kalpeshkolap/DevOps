@@ -36,6 +36,9 @@ Welcome to my Github page! I am Kalpesh and I am currently finishing my Bachelor
 <code><img width="10%" src="https://www.vectorlogo.zone/logos/nginx/nginx-ar21.svg"></code>
 <code><img width="10%" src="https://www.vectorlogo.zone/logos/apache/apache-official.svg"></code>
 <code><img width="10%" src="https://www.vectorlogo.zone/logos/git-scm/git-scm-ar21.svg"></code>
+<br />
+<code><img width="10%" src="https://www.vectorlogo.zone/logos/prometheusio/prometheusio-ar21.svg"></code>
+<code><img width="10%" src="https://www.vectorlogo.zone/logos/grafana/grafana-ar21.svg"></code>
 </p>
 
 
