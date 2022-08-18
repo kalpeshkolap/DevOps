@@ -2,7 +2,7 @@
 ### This is Kalpesh Kolap!
 
 [![Github](https://img.shields.io/badge/-Github-000?style=flat&logo=Github&logoColor=white)](https://github.com/kalpeshkolap/DevOps)
-[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/froldanzafra/)
+[![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/kalpeshkolap/)
 [![Gmail](https://img.shields.io/badge/-Gmail-c14438?style=flat&logo=Gmail&logoColor=white)](mailto:kalpeshkolap96@gmail.com)
 
 Welcome to my Github page! I am Kalpesh and I am currently finishing my Bachelores Degree In Computer Science at the Willingdon Collage!  
