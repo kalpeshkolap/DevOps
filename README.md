@@ -21,7 +21,7 @@ Welcome to my Github page! I am Fernando and I am currently finishing my Compute
 - Exercising 3 days a week
 - Improving my CV with some education apart from university
 
-#### :computer: Programming languages and tools: 
+#### :computer: DevOps tools: 
 <p>
 	<img width="50%" align="right" src="https://github-readme-stats.vercel.app/api?username=kalpeshkolap&show_icons=true&hide_border=true" />
 
