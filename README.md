@@ -25,9 +25,9 @@ Welcome to my Github page! I am Kalpesh and I am currently finishing my Bachelor
 <p>
 	<img width="50%" align="right" src="https://github-readme-stats.vercel.app/api?username=kalpeshkolap&show_icons=true&hide_border=true" />
 
-<code><img width="10%" src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg"></code>
+<code><img width="10%" src="https://www.vectorlogo.zone/logos/jenkins/jenkins-ar21.svg"></code>
 <code><img width="10%" src="https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-ar21.svg"></code>
-<code><img width="8%" src="https://www.vectorlogo.zone/logos/r-project/r-project-icon.svg"></code>
+<code><img width="8%" src="https://www.vectorlogo.zone/logos/docker/docker-ar21.svg"></code>
 <br />
 <code><img width="10%" src="https://www.vectorlogo.zone/logos/pocoo_flask/pocoo_flask-ar21.svg"></code>
 <code><img width="10%" src="https://www.vectorlogo.zone/logos/mysql/mysql-ar21.svg"></code>
