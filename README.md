@@ -5,7 +5,7 @@
 [![Linkedin](https://img.shields.io/badge/-LinkedIn-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/kalpesh-kolap-6a1ba2184)
 [![Gmail](https://img.shields.io/badge/-Gmail-c14438?style=flat&logo=Gmail&logoColor=white)](mailto:kalpeshkolap96@gmail.com)
 
-Welcome to my Github page! I am Kalpesh and I am currently finishing my Bachelores Degree In Computer Science at the Willingdon Collage!  
+Welcome to my Github page! I am Kalpesh and I am currently finishing my Bachelores Degree In Computer Science at the Willingdon Collage of science!  
 
 
 <img align="right" alt="img" src="https://www.uryse.com/wp-content/uploads/2020/06/devops.png" width="50%" height="auto" />
