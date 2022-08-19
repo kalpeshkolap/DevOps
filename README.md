@@ -21,7 +21,7 @@ Welcome to my Github page! I am Kalpesh and I am currently finishing my Bachelor
 - Exercising 3 days a week
 - Improving my CV with some education apart from university
 
-#### :computer: DevOps tools: 
+#### :computer: I Have Practiced Below DevOps Tools : 
 <p>
 	<img width="50%" align="right" src="https://github-readme-stats.vercel.app/api?username=kalpeshkolap&show_icons=true&hide_border=true" />
 
