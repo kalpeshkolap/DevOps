@@ -8,9 +8,9 @@ data:
     us_name: kalpesh
     # file-like keys
     multiprop: |
-      conf-mgmt: ansible
-      iaac: terraform
-      cloud: aws
+        conf-mgmt: ansible
+        iaac: terraform
+        cloud: aws
 
 ---
 apiVersion: v1
