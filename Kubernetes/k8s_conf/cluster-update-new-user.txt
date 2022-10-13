@@ -6,7 +6,7 @@ kubectl edit cm -n kube-system kubeadm-config
  clusterName: dev
 2 creating users with rbac
 
-2.1 openssl genrsa -out de.key 2048
+2.1 openssl genrsa -out dev.key 2048
 2.2 openssl req -new -key dev.key -out dev.csr -subj "/CN=dev/O=development"
 2.3 openssl x509 -req -in dev.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out dev.crt -days 3000
 2.4 kubectl config set-credentials dev --client-certificate=/root/dev/dev.crt --client-key=/root/dev/dev.key
