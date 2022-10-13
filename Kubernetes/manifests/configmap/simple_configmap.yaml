@@ -1,0 +1,38 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: conf
+  namespace: default
+data:
+  mynginx.conf: |
+    server {
+      listen 80:
+      location / {
+        proxy_pass http://localhost:80 ;
+      }
+    }
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "nginx"
+  namespace: default
+  labels:
+    app: "nginx"
+spec:
+  volumes:     
+    - name: config
+      configMap: 
+        name: conf 
+  containers:
+  - name: nginx
+    image: "nginx"
+    ports:
+    - containerPort:  80
+      name:  http
+    volumeMounts:        
+      - name: config    
+        mountPath: /etc/nginx/conf.d/
+  restartPolicy: Always
