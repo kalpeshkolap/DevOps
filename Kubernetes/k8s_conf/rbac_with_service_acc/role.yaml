@@ -6,6 +6,6 @@ metadata:
   namespace: prac
 rules:
 - apiGroups: [""] # "" indicates the core API group
-  resources: ["pods"]
+  resources: ["pods" , "pods/log"]
   verbs: ["get", "watch", "list"]
 ---
