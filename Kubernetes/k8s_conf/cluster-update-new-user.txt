@@ -10,7 +10,7 @@ kubectl edit cm -n kube-system kubeadm-config
 2.2 openssl req -new -key dev.key -out dev.csr -subj "/CN=dev/O=development"
 2.3 openssl x509 -req -in dev.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out dev.crt -days 3000
 2.4 kubectl config set-credentials dev --client-certificate=/root/dev/dev.crt --client-key=/root/dev/dev.key
-2.5 kubectl config set-context dev --cluster=dev --user=dev
+2.5 kubectl config set-context dev --cluster=dev --user=dev --namespace=dev
 
 3 create rbac policies
 3.1 create service account
@@ -33,14 +33,15 @@ metadata:
   name: devuser
 rules:
 - apiGroups: ["*"]
-  resources: ["*"]
-  verbs: ["*"]
+  resources: ["namespace"]
+  resourceNames: ["dev"]
+  verbs: ["get", "list", "watch"]
   
  
  3.3 create clusterRolebinding
  
  vim clusterRolebinding.yaml
- apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: read-secrets-global
