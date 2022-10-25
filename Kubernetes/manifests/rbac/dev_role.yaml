@@ -41,3 +41,4 @@ roleRef:
 ---
 # kubectl auth can-i list pods/log --namespace prac --as system:serviceaccount:prac:dev
 #command to check permissions
+#kubectl get clusterrole cluster-admin -o yaml > cls.yaml
