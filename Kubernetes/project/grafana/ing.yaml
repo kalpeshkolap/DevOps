@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tls-example-ingress
+  namespace: monitoring
+  annotations:
+      #kubernetes.io/ingress.class: "nginx"
+      ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+     #nginx.ingress.kubernetes.io/rewrite-target: / 
+     #nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+      nginx.org/client-max-body-size: "100m"
+      nginx.org/proxy-send-timeout: "300"
+      nginx.org/proxy-read-timeout: "300"
+      nginx.org/proxy-connect-timeout: "300"
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: grafana
+      port:
+        number: 3000
+  tls:
+  - hosts:
+      - 10.1.1.135
+    secretName: grafana
+  rules:
+  - host:   #monitor.grafana.co.in 
+    http:
+      paths:
+      - path: /login
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
