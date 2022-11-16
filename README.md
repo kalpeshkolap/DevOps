@@ -23,7 +23,7 @@ Welcome to my Github page! I am Kalpesh and I am currently finishing my Bachelor
 
 #### :computer: I Have Practiced Below DevOps Tools : 
 <p>
-	<img width="50%" align="right" src="https://github-readme-stats.vercel.app/api?username=kalpeshkolap&show_icons=true&hide_border=true" />
+	<img width="50%" align="right" src="https://github-readme-stats.vercel.app/api?username=kalpeshkolap/DevOps&show_icons=true&hide_border=true" />
 
 <code><img width="10%" src="https://www.vectorlogo.zone/logos/jenkins/jenkins-ar21.svg"></code>
 <code><img width="10%" src="https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-ar21.svg"></code>
