@@ -8,7 +8,7 @@
 Welcome to my Github page! I am Kalpesh and I am currently finishing my Bachelores Degree In Computer Science at the Willingdon Collage of science!  
 
 
-<img align="right" alt="img" src="https://www.uryse.com/wp-content/uploads/2020/06/devops.png" width="50%" height="auto" />
+<img align="right" alt="img" src="https://github.com/kalpeshkolap/linux/blob/master/pngwing.com.png" width="50%" height="auto" />
 
 #### 🌱 Things I am currently working on: 
 - Finish my Bachelores in computer science Degree  
