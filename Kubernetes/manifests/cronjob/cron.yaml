@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: task-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 3Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/opt/data/"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: task-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+
+---
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: git
+              persistentVolumeClaim:
+                claimName: task-pv-claim
+          containers:
+          - name: hello
+            image: kk2104/git
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            args:
+            -  rm -rf  /app/DevOps
+            - git clone https://github.com/kalpeshkolap/DevOps.git
+            volumeMounts:
+              - name: git
+                mountPath: "/app"
+          restartPolicy: OnFailure
