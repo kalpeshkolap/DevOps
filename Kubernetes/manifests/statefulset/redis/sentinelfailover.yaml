@@ -19,7 +19,7 @@ spec:
         command: [ "sh", "-c" ]
         args:
           - |
-            REDIS_PASSWORD=kalpesh@2104
+            REDIS_PASSWORD=kalpesh12345
             nodes=redis-0.redis,redis-1.redis,redis-2.redis
             for i in ${nodes//,/ }
             do
