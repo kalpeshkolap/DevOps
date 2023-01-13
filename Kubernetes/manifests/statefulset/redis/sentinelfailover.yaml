@@ -15,11 +15,11 @@ spec:
     spec:
       initContainers:
       - name: config
-        image: redis:6.2.3-alpine
+        image: redis:7.0.7-alpine
         command: [ "sh", "-c" ]
         args:
           - |
-            REDIS_PASSWORD=a-very-complex-password-here
+            REDIS_PASSWORD=kalpesh@2104
             nodes=redis-0.redis,redis-1.redis,redis-2.redis
             for i in ${nodes//,/ }
             do
@@ -49,7 +49,7 @@ spec:
           mountPath: /etc/redis/
       containers:
       - name: sentinel
-        image: redis:6.2.3-alpine
+        image: redis:7.0.7-alpine
         command: ["redis-sentinel"]
         args: ["/etc/redis/sentinel.conf"]
         ports:
@@ -71,7 +71,7 @@ spec:
       storageClassName: "manual"
       resources:
         requests:
-          storage: 50Mi
+          storage: 500Mi
 ---
 apiVersion: v1
 kind: Service

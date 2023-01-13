@@ -15,7 +15,7 @@ spec:
     spec:
       initContainers:
       - name: config
-        image: redis:6.2.3-alpine
+        image: redis:7.0.7-alpine
         command: [ "sh", "-c" ]
         args:
           - |
@@ -44,7 +44,7 @@ spec:
           mountPath: /tmp/redis/
       containers:
       - name: redis
-        image: redis:6.2.3-alpine
+        image: redis:7.0.7-alpine
         command: ["redis-server"]
         args: ["/etc/redis/redis.conf"]
         ports:
@@ -69,7 +69,7 @@ spec:
       storageClassName: "manual"
       resources:
         requests:
-          storage: 50Mi
+          storage: 500Mi
 ---
 apiVersion: v1
 kind: Service
