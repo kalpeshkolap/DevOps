@@ -24,7 +24,11 @@ spec:
         operator: "Equal"
         value: "server"
         effect: "NoSchedule"
-
+# kubectl label node  node01 webapp=nginx 
+# to remove label use - with key
+# apply taint kubectl taint node node01 webapp=nginx:NoSchedule
+# taint type NoExecute NoSchedule
+# operators Exists Equal
 ---
 apiVersion: apps/v1
 kind: Deployment
