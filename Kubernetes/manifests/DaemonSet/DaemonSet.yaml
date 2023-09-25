@@ -36,7 +36,7 @@ spec:
           mountPath: /usr/share/nginx/html/
       containers:
       - name: daemonset-communicate
-        image: nginx:1.20.0-alpine
+        image: nginx:stable
         volumeMounts:
         - name: nginx-page
           mountPath: /usr/share/nginx/html/
