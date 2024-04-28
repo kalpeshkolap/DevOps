@@ -1,0 +1,35 @@
+#54.202.149.0
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-volume
+  labels:
+    type: nfs-volume
+  namespace: nfs-volume
+spec:
+  storageClassName: nfs-volume
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 54.202.149.0
+    path: "/mnt/data"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-volume-pvc
+  labels:
+    type: nfs-volume
+  namespace: nfs-volume
+spec:
+  storageClassName: nfs-volume
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
