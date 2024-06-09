@@ -12,7 +12,9 @@ resource "aws_iam_role" "s3role" {
 
   assume_role_policy = jsonencode({
     Statement = [{
-      Action = "sts:AssumeRole"
+    actions = [
+      "sts:AssumeRole",
+      "sts:TagSession"]
       Effect = "Allow"
       principals =  {
       type        = "Service"
@@ -23,7 +25,7 @@ resource "aws_iam_role" "s3role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "example_s3" {
+resource "aws_iam_role_policy_attachment" "AmazonS3ReadOnlyAccess" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
   role       = aws_iam_role.s3role.name
 }
@@ -33,5 +35,5 @@ resource "aws_eks_pod_identity_association" "s3" {
   namespace       = "default"
   service_account = "default"
   role_arn        = aws_iam_role.s3role.arn
-  depends_on = [ aws_iam_role.s3role.arn ]
+  depends_on = [ aws_iam_role.s3role ]
 }
