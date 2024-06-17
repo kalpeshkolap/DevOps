@@ -1,0 +1,33 @@
+grafana:
+  enabled: true
+prometheusOperator:
+  enabled: true
+prometheus:
+  enabled: true
+  agentMode: false
+  service:
+    type: LoadBalancer
+  prometheusSpec:
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    scrapeConfigSelectorNilUsesHelmValues: false
+    enableFeatures:
+      - remote-write-receiver
+    thanos:
+      image: quay.io/thanos/thanos:v0.24.0
+      objectStorageConfig:
+        existingSecret:
+          name: thanos-objstore-config
+          key: thanos.yaml
+
+
+
+
+
+
+
+
+
+
+

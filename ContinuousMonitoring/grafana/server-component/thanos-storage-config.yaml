@@ -1,0 +1,12 @@
+type: S3
+config:
+  bucket: "add bucket name"
+  endpoint: "s3.us-west-2.amazonaws.com"
+  region: "us-west-2"
+  access_key: "add your aws_access_key"
+  insecure: false
+  signature_version2: false
+  secret_key: "add aws secret key"
+
+# use below command to create  bucket secret for thanos sidecar
+#kubectl -n server  create secret generic thanos-objstore-config --from-file=thanos.yaml=thanos-storage-config.yaml --dry-run=client -oyaml > s3storeconf.yaml

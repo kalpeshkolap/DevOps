@@ -1,0 +1,20 @@
+grafana:
+  enabled: false
+alertmanager:
+  enabled: false
+prometheusOperator:
+  enabled: true
+prometheus:
+  enabled: true
+  agentMode: true
+  prometheusSpec:
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    scrapeConfigSelectorNilUsesHelmValues: false
+    remoteWrite:
+    - url: http://prometheus-server-ip:9090/api/v1/write
+
+
+
+
