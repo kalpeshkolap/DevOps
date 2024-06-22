@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  helloapp
+  namespace: default
+  labels:
+    app:  helloapp
+spec:
+  selector:
+    matchLabels:
+      app: helloapp
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app:  helloapp
+    spec:
+      containers:
+      - name:  helloapp
+        image:  kk2104/flaskhelloapi:v1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://otel-opentelemetry-collector.server:4317"
+        ports:
+        - containerPort:  8000
+          name:  helloapp
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloapp
+  namespace: default
+spec:
+  selector:
+    app: helloapp
+  type: ClusterIP
+  ports:
+  - name: helloapp
+    protocol: TCP
+    port: 8000
+    targetPort: 8000

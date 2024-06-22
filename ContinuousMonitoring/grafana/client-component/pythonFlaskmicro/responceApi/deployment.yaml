@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  responceapp
+  namespace: default
+  labels:
+    app:  responceapp
+spec:
+  selector:
+    matchLabels:
+      app: responceapp
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app:  responceapp
+    spec:
+      containers:
+      - name:  responceapp
+        image:   kk2104/helloreponceapi:v2
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: HELLO_SERVICE_URL
+          value: "http://helloapp:8000/hello"
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://otel-opentelemetry-collector.server:4317"
+        ports:
+        - containerPort:  8001
+          name:  responceapp
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: responceapp
+  namespace: default
+spec:
+  selector:
+    app: responceapp
+  type: ClusterIP
+  ports:
+  - name: responceapp
+    protocol: TCP
+    port: 8001
+    targetPort: 8001

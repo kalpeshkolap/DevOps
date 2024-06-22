@@ -1,0 +1,35 @@
+mode: "daemonset"
+config:
+  exporters: 
+    otlp: 
+      endpoint: "tempo.server:4317" 
+      tls: 
+        insecure: true 
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
+  service: 
+    telemetry: 
+      logs: 
+        level: "debug" 
+    pipelines: 
+      traces:
+        exporters:
+          - otlp
+        processors:
+          - memory_limiter
+          - batch
+        receivers:
+          - otlp
+  
+image:
+  repository: "otel/opentelemetry-collector-k8s"
+service:
+  enabled: true
+  type: ClusterIP
+
+
