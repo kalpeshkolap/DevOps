@@ -29,12 +29,18 @@ resource "aws_eks_cluster" "xenium" {
       var.xenium-prt-subnet,
       var.xenium-pub-subnet
     ]
-    # endpoint_private_access = true
-    # endpoint_public_access = 
+    endpoint_private_access = true
+    # endpoint_public_access = true
     security_group_ids = [
       var.xenium-pub-sg ]
+  }
+
+  access_config {
+    authentication_mode                         = "API_AND_CONFIG_MAP"
+    bootstrap_cluster_creator_admin_permissions = true
   }
 
   depends_on = [aws_iam_role_policy_attachment.AmazonEKSClusterPolicy,
                     ]
 }
+

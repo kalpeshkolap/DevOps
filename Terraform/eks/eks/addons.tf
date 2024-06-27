@@ -36,5 +36,5 @@ resource "aws_eks_pod_identity_association" "s3" {
   service_account = "default"
   role_arn        = aws_iam_role.s3role.arn
   depends_on = [ aws_iam_role.s3role,
-                  var.clustername ]
+                  local.clusterid  ]
 }

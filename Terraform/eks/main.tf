@@ -54,3 +54,11 @@ module "eks" {
   xenium-prt-subnet = local.xenium-prt-subnet
   xenium-pub-sg = local.xenium-security_group
 }
+
+module "eksIamUsers" {
+  source = "./eksUserManagement"
+  clustername = local.clustername
+  aws_iam_user = [ "anushka" , "pratik" , "vidya"]
+  group_name = "development"
+  eks_cluster_id = module.eks.eks_cluster_id
+}
