@@ -26,7 +26,6 @@ resource "aws_iam_group_policy" "eks_developer_policy" {
 resource "aws_iam_user_group_membership" "development" {
   for_each = toset(var.aws_iam_user)
   user = each.value
-
   groups = [
     aws_iam_group.developers.name,
   ]

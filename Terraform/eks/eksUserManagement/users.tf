@@ -16,7 +16,6 @@ resource "aws_eks_access_entry" "example" {
 
 data "aws_iam_user" "user" {
   for_each = aws_iam_user.development
-
   user_name = each.value.name
   depends_on = [ var.eks_cluster_id , var.clustername ]
 }
