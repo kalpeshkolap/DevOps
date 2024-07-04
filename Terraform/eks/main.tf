@@ -60,5 +60,5 @@ module "eksIamUsers" {
   clustername = local.clustername
   aws_iam_user = [ "anushka" , "pratik" , "vidya"]
   group_name = "development"
-  eks_cluster_id = module.eks.eks_cluster_id
+  eks_cluster_id = module.eks.clusterid
 }
