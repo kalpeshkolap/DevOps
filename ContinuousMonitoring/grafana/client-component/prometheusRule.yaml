@@ -1,0 +1,32 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: myalertrule
+  labels:
+    app.kubernetes.io/instance: prom
+    app.kubernetes.io/version: "2.8.1"
+    release: prom
+spec:
+  groups:
+  - name: cpu_utilization
+    rules:
+    - alert: nginx_cpu_utilization
+      annotations:
+        description: Configuration has failed to load for {{ $labels.namespace }}/{{$labels.pod}}.
+        runbook_url: https://runbooks.prometheus-operator.dev/runbooks/alertmanager/alertmanagerfailedreload
+        summary: Reloading an Alertmanager configuration has failed.
+        priority: P3
+        source: http://35.221.239.161:9090/graph?g0.expr=floor%28sum+by+%28container%29+%28rate%28container_cpu_usage_seconds_total%7Bcontainer%3D%22nginx%22%7D%5B5m%5D%29%29+%2A+100%29+%3E+15&g0.tab=1 
+      expr: floor(sum(rate(container_cpu_usage_seconds_total{container="nginx"}[5m])) by (container) * 100) > 15
+      for: 2m
+      labels:
+        severity: critical     
+  - name: nginx_memory_utilization
+    rules:
+    - alert: memory_utilization
+      expr: floor(sum(container_memory_usage_bytes{container="alertmanager"})/1024/1024) > 15
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        summary: memory_utilization
