@@ -4,7 +4,7 @@ resource "aws_vpc" "focus" {
   enable_dns_support = true
   instance_tenancy = "default"
   tags = {
-    Name = "focus-${var.env}"
+    Name = "${var.clustername}-${var.env}"
   }
 }
 
@@ -18,7 +18,6 @@ resource "aws_subnet" "focus-pub-sub" {
     Name = "focus-${var.env}-${replace(data.aws_availability_zones.available.names[count.index],"-", "")}-pub-${count.index+1}"
     "kubernetes.io/cluster/${var.clustername}-${var.env}"  =	 "owned"
     "kubernetes.io/role/elb"  =	"1"
-    "karpenter.sh/discovery" = "${var.clustername}-${var.env}"
   }
   depends_on = [aws_vpc.focus]
 }
