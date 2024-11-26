@@ -17,3 +17,7 @@ variable "bootstrapaddon" {
   type    = bool
   default = true
 }
+variable "key_name" {}
+variable "instance_type" {}
+
+variable "private_key_pem" {}

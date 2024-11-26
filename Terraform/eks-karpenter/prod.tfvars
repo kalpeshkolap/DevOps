@@ -9,3 +9,4 @@ capacity-type= "ON_DEMAND"
 disk-size = 20
 instance-type = ["t3.medium"]
 eks-version = "1.29"
+key_name = "focus"

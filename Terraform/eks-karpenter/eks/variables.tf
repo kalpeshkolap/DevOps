@@ -5,6 +5,7 @@ variable "private-subnets" {}
 variable "node-group-name" {}
 variable "disk-size" {}
 variable "capacity-type" {}
+variable "ec2-ssh-key" {}
 variable "instance-type" {
   type = list(string)
 }
@@ -14,3 +15,6 @@ variable "bootstrapaddon" {
   default = true
 }
 variable "region" {}
+variable "security_group_id" {
+  type = list(string)
+}
