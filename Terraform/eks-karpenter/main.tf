@@ -43,7 +43,7 @@ module "eks" {
   bootstrapaddon = var.bootstrapaddon
   node-group-name = var.node-group-name
   capacity-type = var.capacity-type
-  disk-size = var.disk-size
+  # disk-size = var.disk-size
   instance-type = [for instance in var.instance-type : instance]
   eks-version = var.eks-version
   depends_on = [module.network.private-subnet-ids, module.network.public-subnet-ids,module.security]

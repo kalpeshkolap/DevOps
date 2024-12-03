@@ -7,7 +7,7 @@ variable "node-group-name" {
   type = string
   default = "ng-node"
 }
-variable "disk-size" {}
+# variable "disk-size" {}
 variable "capacity-type" {}
 variable "instance-type" {
   type = list(string)
