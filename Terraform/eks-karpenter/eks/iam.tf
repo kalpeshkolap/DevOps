@@ -128,3 +128,13 @@ resource "aws_eks_access_entry" "karpenter-api-access" {
   depends_on = [local.clusterid]
 }
 
+resource "aws_iam_instance_profile" "node_instance_profile" {
+  name = "node-instance-profile-${var.clustername}-${var.env}"
+  role = aws_iam_role.NodeRole.name
+
+  depends_on = [
+    aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.nodes-AmazonEBSCSIDriverPolicy
+  ]
+}

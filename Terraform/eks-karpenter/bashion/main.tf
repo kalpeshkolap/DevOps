@@ -9,4 +9,7 @@ resource "aws_instance" "myec2vm" {
   tags = {
     "Name" = "bashion"
   }
+  lifecycle {
+    prevent_destroy = false
+  }
 }

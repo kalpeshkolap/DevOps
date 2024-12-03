@@ -3,7 +3,7 @@ variable "env" {}
 variable "public-subnets" {}
 variable "private-subnets" {}
 variable "node-group-name" {}
-variable "disk-size" {}
+# variable "disk-size" {}
 variable "capacity-type" {}
 variable "ec2-ssh-key" {}
 variable "instance-type" {

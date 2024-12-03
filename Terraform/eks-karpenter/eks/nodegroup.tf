@@ -3,12 +3,15 @@ resource "aws_eks_node_group" "private-nodes" {
   node_group_name = var.node-group-name
   node_role_arn   = aws_iam_role.NodeRole.arn
   subnet_ids      = var.private-subnets
-  disk_size       = var.disk-size
   capacity_type   = var.capacity-type
   instance_types  = [for instance in var.instance-type : instance]
-  remote_access {
-    ec2_ssh_key               = var.ec2-ssh-key
-    source_security_group_ids = var.security_group_id
+  # remote_access {
+  #   ec2_ssh_key               = var.ec2-ssh-key
+  #   source_security_group_ids = var.security_group_id
+  # }
+  launch_template {
+    version = "$Latest"
+    id = aws_launch_template.ubuntu_template.id
   }
   scaling_config {
     desired_size = 1
