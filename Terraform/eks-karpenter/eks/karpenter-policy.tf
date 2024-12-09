@@ -138,7 +138,6 @@ resource "aws_iam_policy" "karpenter-controller-policy" {
             "Effect": "Allow",
             "Resource": "*",
             "Action": [
-                "ec2:DescribeAvailabilityZones",
                 "ec2:DescribeImages",
                 "ec2:DescribeInstances",
                 "ec2:DescribeInstanceTypeOfferings",
@@ -169,7 +168,7 @@ resource "aws_iam_policy" "karpenter-controller-policy" {
         {
             "Sid": "AllowInterruptionQueueActions",
             "Effect": "Allow",
-            "Resource": "arn:aws:sqs:${var.region}:860379470066:${var.clustername}-${var.env}",
+            "Resource": "${aws_sqs_queue.terraform_queue.arn}",
             "Action": [
                 "sqs:DeleteMessage",
                 "sqs:GetQueueUrl",
@@ -179,11 +178,14 @@ resource "aws_iam_policy" "karpenter-controller-policy" {
         {
             "Sid": "AllowPassingInstanceRole",
             "Effect": "Allow",
-            "Resource": "arn:aws:iam::860379470066:role/KarpenterNodeRole-${var.clustername}-${var.env}",
+            "Resource": "${aws_iam_role.NodeRole.arn}",
             "Action": "iam:PassRole",
             "Condition": {
                 "StringEquals": {
-                    "iam:PassedToService": "ec2.amazonaws.com"
+                    "iam:PassedToService": [
+                        "ec2.amazonaws.com",
+                        "ec2.amazonaws.com.cn"
+                    ]
                 }
             }
         },
@@ -254,11 +256,10 @@ resource "aws_iam_policy" "karpenter-controller-policy" {
         {
             "Sid": "AllowAPIServerEndpointDiscovery",
             "Effect": "Allow",
-            "Resource": "arn:aws:eks:${var.region}:860379470066:cluster/${var.clustername}-${var.env}",
+            "Resource": "${aws_eks_cluster.focus.arn}",
             "Action": "eks:DescribeCluster"
         }
     ]
-
   })
 }
 
@@ -303,6 +304,6 @@ resource "aws_eks_pod_identity_association" "kaapentercontrollerIdentityAssociat
 #   karpenter oci://public.ecr.aws/karpenter/karpenter \
 #   --version 1.0.8 \
 #   --set "serviceAccount.annotations.eks\.amazonaws\.com/role-arn=arn:aws:iam::860379470066:role/karpentercontrollerRole" \
-#   --set settings.clusterName=focus-dev \
-#   --set settings.interruptionQueue=focus-dev\
+#   --set settings.clusterName=${var.clustername}-${var.env} \
+#   --set settings.interruptionQueue=${var.clustername}-${var.env}\
 #   --set replicas=1

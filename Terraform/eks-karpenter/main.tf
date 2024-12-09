@@ -21,7 +21,8 @@ provider "aws" {
 locals {
   prt-subnet = module.network.private-subnet-ids
   pub-subnet = module.network.public-subnet-ids
-  security-group_id = module.security.security_group_id
+  cluster_endpoint = module.eks.cluster_endpoint
+  cluster_name = module.eks.cluster_name
 }
 
 module "network" {
@@ -36,20 +37,22 @@ module "network" {
 
 module "eks" {
   source = "./eks"
-  clustername = var.clustername
+  clustername = "${var.clustername}-${var.env}"
   private-subnets = local.prt-subnet
   public-subnets = local.pub-subnet
   env = var.env
+  disk-size = var.disk-size
   bootstrapaddon = var.bootstrapaddon
   node-group-name = var.node-group-name
   capacity-type = var.capacity-type
-  disk-size = var.disk-size
-  instance-type = [for instance in var.instance-type : instance]
+  instance-type = ["${var.instance-type}"]
   eks-version = var.eks-version
   depends_on = [module.network.private-subnet-ids, module.network.public-subnet-ids,module.security]
   region = var.aws_region
   ec2-ssh-key = module.network.public_key
   security_group_id = ["${module.security.security_group_id}"]
+  security_group_name = ["${module.security.security_group_name}"]
+  instance_type = var.instance_type
 }
 
 module "bashion" {
@@ -66,3 +69,6 @@ module "security" {
   vpc_id = module.network.vpc_id
   depends_on = [module.network]
 }
+
+
+

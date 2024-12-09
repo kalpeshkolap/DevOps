@@ -3,12 +3,11 @@ resource "aws_eks_node_group" "private-nodes" {
   node_group_name = var.node-group-name
   node_role_arn   = aws_iam_role.NodeRole.arn
   subnet_ids      = var.private-subnets
-  disk_size       = var.disk-size
   capacity_type   = var.capacity-type
-  instance_types  = [for instance in var.instance-type : instance]
-  remote_access {
-    ec2_ssh_key               = var.ec2-ssh-key
-    source_security_group_ids = var.security_group_id
+  ami_type = "CUSTOM"
+  launch_template {
+    version = "$Latest"
+    id = aws_launch_template.eks_node_group.id
   }
   scaling_config {
     desired_size = 1
@@ -28,7 +27,8 @@ resource "aws_eks_node_group" "private-nodes" {
     local.clusterid
   ]
   tags = {
-    "karpenter.sh/discovery" = "${var.clustername}-${var.env}"
-    Name                     = "focus-${var.env}-node"
+    Name = "focus-${var.env}-node"
   }
 }
+
+#ami-056899329d49c452b
